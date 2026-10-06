@@ -2,7 +2,7 @@
 #
 # helium-widevine-macos.sh
 #
-# Makes DRM video (Netflix, Spotify, Prime Video, etc.) play in the Helium
+# Makes DRM video (Spotify, Prime Video, etc.) play in the Helium
 # browser on macOS by copying Google's Widevine module from Chrome, Brave or
 # Edge into Helium.
 #
@@ -372,7 +372,8 @@ do_install() {
   [ $RESIGN -eq 1 ] && total=5
 
   bold "Helium Widevine setup"
-  echo "This will set up Helium to play protected video (Netflix, Spotify, etc.)."
+  echo "This will set up Helium to play protected video (Spotify, Prime Video, etc.)."
+  echo "Note: Netflix will still refuse to play in Helium. Use Safari for Netflix."
   echo "Helium will close and reopen during this. Your tabs will come back."
   if [ $RESIGN -eq 1 ]; then
     explain_resign

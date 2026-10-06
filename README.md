@@ -1,6 +1,8 @@
-# Make Netflix, Spotify and other protected video work in Helium (Mac)
+# Make Spotify and other protected video work in Helium (Mac)
 
-Helium doesn't come with **Widevine**, the piece of Google software that streaming sites use to protect their videos. Without it, sites like Netflix, Spotify, Prime Video, Disney+ and Crunchyroll show an error instead of playing.
+Helium doesn't come with **Widevine**, the piece of Google software that streaming sites use to protect their videos. Without it, sites like Spotify, Prime Video, Disney+ and Crunchyroll show an error instead of playing.
+
+> **Netflix won't work, even with this fix.** Netflix only plays in browsers that can prove they're an unmodified, Google-approved build, and Helium can't. Use **Safari** for Netflix. It also gives the best picture quality on a Mac. [More details below.](#why-netflix-doesnt-work)
 
 This guide copies Widevine from Google Chrome into Helium. It takes about 5 minutes. You don't need to know anything about Terminal; you'll copy and paste one line.
 
@@ -78,7 +80,7 @@ If macOS shows a box asking to let Helium use your **Keychain**:
 
 ### Step 6. Check that it worked
 
-On the test page, a video should start playing. If it does, you're done. Netflix, Spotify and other streaming sites should now work in Helium.
+On the test page, a video should start playing. If it does, you're done. Spotify and most other streaming sites should now work in Helium. (Netflix won't; use Safari for it.)
 
 You can close Terminal.
 
@@ -103,7 +105,27 @@ To get past that, the script replaces Helium's signature with one created on you
 - **Updates.** Each Helium update removes the fix. Run the command again after updating.
 - **Less protection.** Helium loses some of macOS's protection against other programs tampering with it. This only matters if something harmful is already on your Mac.
 
-**Video quality:** Helium gets the basic version of Widevine, so Netflix and Prime Video may play at lower quality (around 720p). Safari plays Netflix in up to 4K, so it's a better choice if quality matters most.
+**Video quality:** Helium gets the most basic version of Widevine, and it can't prove to streaming services that it's a genuine, unmodified browser. Some services respond by lowering the quality, and some refuse to play at all. Safari plays most services in up to 4K on a Mac, so it's the better choice when picture quality matters.
+
+---
+
+## Why Netflix doesn't work
+
+When you start a show, Netflix shows this, even though you're signed in:
+
+```
+Pardon the interruption
+Your Netflix session has expired. Please sign out and sign in again.
+Error Code M7111-1957-205064
+```
+
+Signing out and back in, turning off the ad blocker and clearing Netflix's data won't help. The message is misleading: your session is fine. Netflix is refusing to play in Helium.
+
+Chrome includes signature files from Google that let Widevine confirm Chrome hasn't been modified. This check is called **Verified Media Path**. Netflix requires it. Helium can't have those files, because only Google can create them, so Netflix turns it away. Nothing this script does can change that.
+
+**Use Safari for Netflix.** It plays in up to 4K and needs no setup. Chrome works too.
+
+If you'd like Helium to support DRM properly, add a 👍 to [Helium's request for it](https://github.com/imputnet/helium/issues/116). Only Helium's developers can set up the agreements that would make Netflix accept it.
 
 ---
 
@@ -131,6 +153,7 @@ Your bookmarks, history and saved passwords aren't affected.
 | `Helium is still open` | Click on any Helium window, press **Command (⌘) + Q**, go back to Terminal and press Return. |
 | `Sorry, try again.` | The password was mistyped. Type it again carefully and press Return. |
 | `zsh: command not found` or `no such file` | The line wasn't copied completely. Copy the whole line from Step 2 again, including the start (`curl`) and the end (`--resign`). |
+| Netflix says **"Your Netflix session has expired"** (error M7111-1957-205064) when you start a show | Netflix doesn't work in Helium. Use Safari for Netflix. See [Why Netflix doesn't work](#why-netflix-doesnt-work). |
 | The test video still shows an error | Quit Helium (**Command (⌘) + Q**) and open it again. If it still fails, run the check below and share the result. |
 
 **Run a check.** Paste this line in Terminal and press **Return**. It changes nothing; it just shows what's installed:
